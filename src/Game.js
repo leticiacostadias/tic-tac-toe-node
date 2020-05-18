@@ -2,6 +2,7 @@ const input = require("./lib/input");
 const gameStatus = require("./constants/game-status");
 const cellStatus = require("./constants/cell-state");
 const players = require("./constants/players");
+const getBoardWinner = require("./lib/get-board-winner");
 
 class Game {
   constructor() {
@@ -28,6 +29,8 @@ class Game {
   }
 
   _getTurn() {
+    if (this.turn > 0) input.clear();
+
     console.log("The board now:");
     console.log(this._boardToString());
 
@@ -44,14 +47,32 @@ class Game {
         const playerOfTheTurn = this.players[this.turn % this.players.length];
 
         if (
-          this.board[markPositionX - 1][markPositionY - 1] !== cellStatus.empty
+          this.board[markPositionY - 1][markPositionX - 1] !== cellStatus.empty
         ) {
           console.log("Ooops! That cell is already marked! Pick another one.");
           this._getTurn();
           return;
         }
 
-        this.board[markPositionX - 1][markPositionY - 1] = playerOfTheTurn;
+        this.board[markPositionY - 1][markPositionX - 1] = playerOfTheTurn;
+
+        const winner = getBoardWinner(this.board);
+        const flattenBoard = this.board.flat();
+
+        if (winner) {
+          if (this.turn > 0) input.clear();
+          console.log(`${winner} IS THE WINNER!`);
+          console.log(this._boardToString());
+          return;
+        }
+
+        if (!flattenBoard.some((c) => c === cellStatus.empty)) {
+          if (this.turn > 0) input.clear();
+          console.log("Oh no! Looks like is a draw!");
+          console.log(this._boardToString());
+          return;
+        }
+
         this.turn++;
         this._getTurn();
       }
@@ -74,6 +95,8 @@ class Game {
         parsedPlayerOne,
         ...players.filter((p) => p !== parsedPlayerOne),
       ]);
+
+      input.clear();
 
       console.log("\n\nNow!");
       console.log("Let");
