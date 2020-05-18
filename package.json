@@ -1,0 +1,24 @@
+{
+  "name": "tic-tac-toe-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leticiacostadias/tic-tac-toe-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leticiacostadias/tic-tac-toe-node/issues"
+  },
+  "homepage": "https://github.com/leticiacostadias/tic-tac-toe-node#readme"
+}
